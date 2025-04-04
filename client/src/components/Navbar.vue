@@ -5,28 +5,29 @@
 -->
 <template>
   <!-- 主导航栏容器 -->
-  <nav class="navbar">
-    <div class="container">
-      <!-- 网站品牌/Logo区域 -->
-      <div class="navbar-brand">
-        <router-link to="/" class="navbar-logo">BaiyuSpace</router-link>
-      </div>
+  <nav class="main-nav">
+    <div class="nav-group">
+      <router-link to="/" class="nav-item">首页</router-link>
+      <router-link to="/videos" class="nav-item">视频</router-link>
+      <router-link to="/games" class="nav-item">游戏</router-link>
+      <router-link to="/forum" class="nav-item">论坛</router-link>
+      <router-link to="/software" class="nav-item">软件</router-link>
+      <router-link to="/feedback" class="nav-item">反馈</router-link>
+      <router-link to="/support" class="nav-item">支持</router-link>
       
-      <!-- 导航菜单区域 -->
-      <div class="navbar-menu">
-        <div class="navbar-end">
-          <!-- 已登录用户菜单选项 -->
-          <template v-if="isAuthenticated">
-            <router-link to="/create-post" class="navbar-item">发布文章</router-link>
-            <router-link to="/profile" class="navbar-item">{{ user.username }}</router-link>
-            <a @click="logout" class="navbar-item">登出</a>
-          </template>
-          <!-- 未登录用户菜单选项 -->
-          <template v-else>
-            <router-link to="/login" class="navbar-item">登录</router-link>
-            <router-link to="/register" class="navbar-item">注册</router-link>
-          </template>
-        </div>
+      <!-- 右侧用户菜单 -->
+      <div class="user-menu">
+        <!-- 已登录用户菜单选项 -->
+        <template v-if="isAuthenticated">
+          <router-link to="/posts/create" class="nav-item">发布文章</router-link>
+          <router-link to="/profile" class="nav-item">{{ user.username }}</router-link>
+          <a @click="logout" class="nav-item">登出</a>
+        </template>
+        <!-- 未登录用户菜单选项 -->
+        <template v-else>
+          <router-link to="/login" class="nav-item">登录</router-link>
+          <router-link to="/register" class="nav-item">注册</router-link>
+        </template>
       </div>
     </div>
   </nav>
@@ -123,54 +124,79 @@ export default {
 </script>
 
 <style scoped>
-/* 导航栏基础样式 - 暗色主题 */
-.navbar {
-  background-color: #121212; /* 深色背景 */
-  padding: 1rem 0;
-  color: white;
-}
-
-/* 导航容器布局 - 使用Flex实现两端对齐 */
-.container {
+/* 导航栏样式 */
+.main-nav {
+  position: fixed;
+  top: 20px;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,0.9);
+  padding: 1rem;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  z-index: 1000;
 }
 
-/* 品牌/Logo区域样式 */
-.navbar-brand {
-  font-size: 1.5rem;
-  font-weight: bold;
+.nav-group {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  width: auto;
+  transform: translateX(0);
+  position: relative;
 }
 
-/* Logo链接样式 */
-.navbar-logo {
+/* 导航项样式 */
+.nav-item {
+  position: relative;
+  padding-left: 40px;
   color: white;
   text-decoration: none;
-}
-
-/* 菜单容器样式 */
-.navbar-menu {
-  display: flex;
-}
-
-/* 右侧菜单项容器 */
-.navbar-end {
   display: flex;
   align-items: center;
+  font-size: 1.2rem;
 }
 
-/* 菜单项基础样式 */
-.navbar-item {
-  color: white;
-  margin-left: 1.5rem;
-  text-decoration: none;
-  cursor: pointer;
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: #666;
+  border-radius: 6px;
 }
 
-/* 菜单项悬停效果 */
-.navbar-item:hover {
-  color: #aaa;
-  text-decoration: none;
+/* 用户菜单样式 */
+.user-menu {
+  display: flex;
+  margin-left: auto;
+  gap: 1rem;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .main-nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.8rem;
+  }
+  
+  .nav-group {
+    gap: 0.8rem;
+    flex-direction: column;
+  }
+  
+  .nav-item {
+    padding-left: 32px;
+    font-size: 1.1rem;
+  }
+  
+  .user-menu {
+    margin-left: 0;
+    margin-top: 0.5rem;
+    flex-direction: column;
+  }
 }
 </style> 

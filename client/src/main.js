@@ -14,7 +14,7 @@ import authService from './services/auth';  // 导入认证服务实例
  * 设置全局 axios 默认值
  */
 // 配置API基础URL，优先使用环境变量中的配置，否则使用本地开发地址
-axios.defaults.baseURL = process.env.VUE_APP_API_URL || 'http://localhost:3000';
+axios.defaults.baseURL = process.env.VUE_APP_API_URL || 'http://localhost:5000';
 // 允许跨域请求携带身份凭证（cookies、HTTP认证及客户端SSL证明等）
 axios.defaults.withCredentials = true;
 
